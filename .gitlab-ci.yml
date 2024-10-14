@@ -1,0 +1,52 @@
+stages:
+  - backend_install
+  - backend_test
+  - frontend_install
+  - frontend_test
+  - build
+  - deploy
+
+# Backend: Install dependencies
+backend_install:
+  stage: backend_install
+  script:
+    - cd backend
+    - npm install
+
+# Backend: Run tests
+backend_test:
+  stage: backend_test
+  script:
+    - cd backend
+    - npm test
+
+# Frontend: Install dependencies
+frontend_install:
+  stage: frontend_install
+  script:
+    - cd frontend
+    - npm install
+
+# Frontend: Run tests
+frontend_test:
+  stage: frontend_test
+  script:
+    - cd frontend
+    - npm test
+
+# Build: Build both frontend and backend
+build:
+  stage: build
+  script:
+    - cd frontend
+    - npm run build
+    - cd ../backend
+    - npm run build
+
+# Deploy: Deploy the built app
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying the application..."
+  only:
+    - main
